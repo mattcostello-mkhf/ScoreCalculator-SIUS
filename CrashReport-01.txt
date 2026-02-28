@@ -1,0 +1,404 @@
+-------------------------------------
+Translated Report (Full Report Below)
+-------------------------------------
+Process:             Python [32712]
+Path:                /Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/Resources/Python.app/Contents/MacOS/Python
+Identifier:          com.apple.python3
+Version:             3.9.6 (3.9.6)
+Build Info:          python3-141000000500005~1429
+Code Type:           ARM-64 (Native)
+Role:                Background
+Parent Process:      zsh [32706]
+Coalition:           com.apple.Terminal [1913]
+Responsible Process: Terminal [1950]
+User ID:             501
+
+Date/Time:           2026-01-31 14:40:38.6175 -0800
+Launch Time:         2026-01-31 14:40:38.4581 -0800
+Hardware Model:      Mac16,12
+OS Version:          macOS 26.2 (25C56)
+Release Type:        User
+
+Crash Reporter Key:  36EFA5B7-E9FF-E05B-EFE6-62F1BAE7A1CE
+Incident Identifier: C0795548-57BC-41C7-AECD-22537854970E
+
+Sleep/Wake UUID:       40B3ABE4-FEB0-4571-AD44-F6BC271D4308
+
+Time Awake Since Boot: 110000 seconds
+Time Since Wake:       1298 seconds
+
+System Integrity Protection: enabled
+
+Triggered by Thread: 0, Dispatch Queue: com.apple.main-thread
+
+Exception Type:    EXC_CRASH (SIGABRT)
+Exception Codes:   0x0000000000000000, 0x0000000000000000
+
+Termination Reason:  Namespace SIGNAL, Code 6, Abort trap: 6
+Terminating Process: Python [32712]
+
+
+Application Specific Information:
+abort() called
+
+
+Thread 0 Crashed::  Dispatch queue: com.apple.main-thread
+0   libsystem_kernel.dylib        	       0x19e79f5b0 __pthread_kill + 8
+1   libsystem_pthread.dylib       	       0x19e7d9888 pthread_kill + 296
+2   libsystem_c.dylib             	       0x19e6de850 abort + 124
+3   Tcl                           	       0x24ad66068 Tcl_PanicVA + 232
+4   Tcl                           	       0x24ad66088 Tcl_Panic + 32
+5   Tk                            	       0x24b06c730 TkpInit + 452
+6   Tk                            	       0x24afeba30 0x24afbc000 + 195120
+7   _tkinter.cpython-39-darwin.so 	       0x1078807a8 0x107878000 + 34728
+8   _tkinter.cpython-39-darwin.so 	       0x10787a3d0 0x107878000 + 9168
+9   _tkinter.cpython-39-darwin.so 	       0x107879cdc 0x107878000 + 7388
+10  Python3                       	       0x102884cec 0x102800000 + 543980
+11  Python3                       	       0x1029163dc 0x102800000 + 1139676
+12  Python3                       	       0x102911cb0 _PyEval_EvalFrameDefault + 8728
+13  Python3                       	       0x102917134 0x102800000 + 1143092
+14  Python3                       	       0x102841bd8 _PyFunction_Vectorcall + 228
+15  Python3                       	       0x102841198 _PyObject_FastCallDictTstate + 268
+16  Python3                       	       0x1028420c8 _PyObject_Call_Prepend + 152
+17  Python3                       	       0x1028a7de0 0x102800000 + 687584
+18  Python3                       	       0x10289f014 0x102800000 + 651284
+19  Python3                       	       0x10284136c _PyObject_MakeTpCall + 356
+20  Python3                       	       0x10291643c 0x102800000 + 1139772
+21  Python3                       	       0x102911cb0 _PyEval_EvalFrameDefault + 8728
+22  Python3                       	       0x102841d6c 0x102800000 + 269676
+23  Python3                       	       0x102841198 _PyObject_FastCallDictTstate + 268
+24  Python3                       	       0x1028420c8 _PyObject_Call_Prepend + 152
+25  Python3                       	       0x1028a7de0 0x102800000 + 687584
+26  Python3                       	       0x10289f014 0x102800000 + 651284
+27  Python3                       	       0x10284136c _PyObject_MakeTpCall + 356
+28  Python3                       	       0x10291643c 0x102800000 + 1139772
+29  Python3                       	       0x10291256c _PyEval_EvalFrameDefault + 10964
+30  Python3                       	       0x102841d6c 0x102800000 + 269676
+31  Python3                       	       0x1029163dc 0x102800000 + 1139676
+32  Python3                       	       0x10291256c _PyEval_EvalFrameDefault + 10964
+33  Python3                       	       0x102917134 0x102800000 + 1143092
+34  Python3                       	       0x10290f9d0 PyEval_EvalCode + 80
+35  Python3                       	       0x10290c33c 0x102800000 + 1098556
+36  Python3                       	       0x102884cec 0x102800000 + 543980
+37  Python3                       	       0x1029163dc 0x102800000 + 1139676
+38  Python3                       	       0x10291256c _PyEval_EvalFrameDefault + 10964
+39  Python3                       	       0x102917134 0x102800000 + 1143092
+40  Python3                       	       0x102841bd8 _PyFunction_Vectorcall + 228
+41  Python3                       	       0x1029163dc 0x102800000 + 1139676
+42  Python3                       	       0x10291256c _PyEval_EvalFrameDefault + 10964
+43  Python3                       	       0x102917134 0x102800000 + 1143092
+44  Python3                       	       0x102841bd8 _PyFunction_Vectorcall + 228
+45  Python3                       	       0x10296f234 0x102800000 + 1503796
+46  Python3                       	       0x10296ea9c Py_RunMain + 824
+47  Python3                       	       0x10296f0c0 0x102800000 + 1503424
+48  Python3                       	       0x10296f160 Py_BytesMain + 40
+49  dyld                          	       0x19e411d54 start + 7184
+
+Thread 1:
+
+Thread 2:
+
+Thread 3:
+
+
+Thread 0 crashed with ARM Thread State (64-bit):
+    x0: 0x0000000000000000   x1: 0x0000000000000000   x2: 0x0000000000000000   x3: 0x0000000000000000
+    x4: 0x0000000000000000   x5: 0x000000016d690c30   x6: 0x0000000000000021   x7: 0xfffff0003ffff800
+    x8: 0xfe9656eef8edad1c   x9: 0xfe9656ecf382015c  x10: 0x0000000000000002  x11: 0x0000010000000000
+   x12: 0x00000000fffffffd  x13: 0x0000000000000000  x14: 0x0000000000000000  x15: 0x0000000000000000
+   x16: 0x0000000000000148  x17: 0x000000020ccb8990  x18: 0x0000000000000000  x19: 0x0000000000000006
+   x20: 0x0000000000000103  x21: 0x000000020b6fad20  x22: 0x00000008fb2941b3  x23: 0x00000002b2e7f768
+   x24: 0x00000002b2e7f000  x25: 0x00000002b2e7e000  x26: 0x00000002b2e7e000  x27: 0x00000002b2e7e000
+   x28: 0x00000002b2e7e000   fp: 0x000000016d690be0   lr: 0x000000019e7d9888
+    sp: 0x000000016d690bc0   pc: 0x000000019e79f5b0 cpsr: 0x40000000
+   far: 0x0000000000000000  esr: 0x56000080 (Syscall)
+
+Binary Images:
+       0x10276c000 -        0x10276ffff com.apple.python3 (3.9.6) <b30273ae-4473-35ac-847a-8472ec1befdf> /Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/Resources/Python.app/Contents/MacOS/Python
+       0x102800000 -        0x102a63fff com.apple.python3 (3.9.6) <4d9bf7cf-b241-345e-9f8f-a402f42696a5> /Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/Python3
+       0x102b80000 -        0x102b87fff _heapq.cpython-39-darwin.so (*) <753d9517-05dd-325f-b9b7-b882e0a1b3e2> /Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/lib-dynload/_heapq.cpython-39-darwin.so
+       0x107878000 -        0x107883fff _tkinter.cpython-39-darwin.so (*) <f7ecb261-b628-36c0-8053-1c3318acaefd> /Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/lib-dynload/_tkinter.cpython-39-darwin.so
+       0x107894000 -        0x10789bfff _csv.cpython-39-darwin.so (*) <6f3cc8b3-e5ce-30e5-8185-3359cf4dc1df> /Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/lib-dynload/_csv.cpython-39-darwin.so
+       0x19e796000 -        0x19e7d249f libsystem_kernel.dylib (*) <548c45c8-9733-3f0d-8ef4-c06df1df2ad0> /usr/lib/system/libsystem_kernel.dylib
+       0x19e7d3000 -        0x19e7dfabb libsystem_pthread.dylib (*) <527c4ba0-91a5-378b-b3e2-d38269ca5a66> /usr/lib/system/libsystem_pthread.dylib
+       0x19e665000 -        0x19e6e7047 libsystem_c.dylib (*) <fb5569a9-cb26-36c2-aa05-e99243692b60> /usr/lib/system/libsystem_c.dylib
+       0x24ace8000 -        0x24adb67eb com.tcltk.tcllibrary (8.5.9) <c9cd8c7f-3b46-374c-b719-5dffaf34800f> /System/Library/Frameworks/Tcl.framework/Versions/8.5/Tcl
+       0x24afbc000 -        0x24b0a41bf com.tcltk.tklibrary (8.5.9) <235d29c7-47b7-3535-959a-6687691ea2f5> /System/Library/Frameworks/Tk.framework/Versions/8.5/Tk
+       0x19e409000 -        0x19e4a7fc3 dyld (*) <0975afba-c46b-364c-bd84-a75daa9e455a> /usr/lib/dyld
+               0x0 - 0xffffffffffffffff ??? (*) <00000000-0000-0000-0000-000000000000> ???
+
+External Modification Summary:
+  Calls made by other processes targeting this process:
+    task_for_pid: 0
+    thread_create: 0
+    thread_set_state: 0
+  Calls made by this process:
+    task_for_pid: 0
+    thread_create: 0
+    thread_set_state: 0
+  Calls made by all processes on this machine:
+    task_for_pid: 0
+    thread_create: 0
+    thread_set_state: 0
+
+VM Region Summary:
+ReadOnly portion of Libraries: Total=946.7M resident=0K(0%) swapped_out_or_unallocated=946.7M(100%)
+Writable regions: Total=128.3M written=336K(0%) resident=336K(0%) swapped_out=0K(0%) unallocated=127.9M(100%)
+
+                                VIRTUAL   REGION 
+REGION TYPE                        SIZE    COUNT (non-coalesced) 
+===========                     =======  ======= 
+Activity Tracing                   256K        1 
+CoreGraphics                        16K        1 
+CoreServices                        48K        1 
+Kernel Alloc Once                   32K        1 
+MALLOC                           105.1M       19 
+MALLOC guard page                 3648K        4 
+STACK GUARD                         64K        4 
+Stack                             17.6M        4 
+VM_ALLOCATE                       5424K       23 
+__AUTH                            1728K      190 
+__AUTH_CONST                      31.6M      410 
+__CTF                               824        1 
+__DATA                            6251K      369 
+__DATA_CONST                      21.1M      416 
+__DATA_DIRTY                      1981K      342 
+__FONT_DATA                        2352        1 
+__LINKEDIT                       589.8M        6 
+__OBJC_RO                         78.4M        1 
+__OBJC_RW                         2570K        1 
+__TEXT                           357.0M      433 
+__TPRO_CONST                       128K        2 
+dyld private memory                160K        4 
+mapped file                       57.3M        8 
+page table in kernel               336K        1 
+shared memory                     1376K       15 
+===========                     =======  ======= 
+TOTAL                              1.3G     2258 
+
+
+-----------
+Full Report
+-----------
+
+{"app_name":"Python","timestamp":"2026-01-31 14:40:39.00 -0800","app_version":"3.9.6","slice_uuid":"b30273ae-4473-35ac-847a-8472ec1befdf","build_version":"3.9.6","platform":1,"bundleID":"com.apple.python3","share_with_app_devs":1,"is_first_party":0,"bug_type":"309","os_version":"macOS 26.2 (25C56)","roots_installed":0,"name":"Python","incident_id":"C0795548-57BC-41C7-AECD-22537854970E"}
+{
+  "uptime" : 110000,
+  "procRole" : "Background",
+  "version" : 2,
+  "userID" : 501,
+  "deployVersion" : 210,
+  "modelCode" : "Mac16,12",
+  "coalitionID" : 1913,
+  "osVersion" : {
+    "train" : "macOS 26.2",
+    "build" : "25C56",
+    "releaseType" : "User"
+  },
+  "captureTime" : "2026-01-31 14:40:38.6175 -0800",
+  "codeSigningMonitor" : 2,
+  "incident" : "C0795548-57BC-41C7-AECD-22537854970E",
+  "pid" : 32712,
+  "translated" : false,
+  "cpuType" : "ARM-64",
+  "procLaunch" : "2026-01-31 14:40:38.4581 -0800",
+  "procStartAbsTime" : 2834005049545,
+  "procExitAbsTime" : 2834008825206,
+  "procName" : "Python",
+  "procPath" : "\/Library\/Developer\/CommandLineTools\/Library\/Frameworks\/Python3.framework\/Versions\/3.9\/Resources\/Python.app\/Contents\/MacOS\/Python",
+  "bundleInfo" : {"CFBundleShortVersionString":"3.9.6","CFBundleVersion":"3.9.6","CFBundleIdentifier":"com.apple.python3"},
+  "buildInfo" : {"ProjectName":"python3","SourceVersion":"141000000500005","BuildVersion":"1429"},
+  "storeInfo" : {"deviceIdentifierForVendor":"58F515F1-B096-5AA5-88E6-6D8133EABFB9","thirdParty":true},
+  "parentProc" : "zsh",
+  "parentPid" : 32706,
+  "coalitionName" : "com.apple.Terminal",
+  "crashReporterKey" : "36EFA5B7-E9FF-E05B-EFE6-62F1BAE7A1CE",
+  "appleIntelligenceStatus" : {"state":"available"},
+  "developerMode" : 1,
+  "responsiblePid" : 1950,
+  "responsibleProc" : "Terminal",
+  "codeSigningID" : "com.apple.python3",
+  "codeSigningTeamID" : "",
+  "codeSigningFlags" : 570442241,
+  "codeSigningValidationCategory" : 1,
+  "codeSigningTrustLevel" : 4294967295,
+  "codeSigningAuxiliaryInfo" : 0,
+  "instructionByteStream" : {"beforePC":"fyMD1f17v6n9AwCRFOD\/l78DAJH9e8Go\/w9f1sADX9YQKYDSARAA1A==","atPC":"AwEAVH8jA9X9e7+p\/QMAkQng\/5e\/AwCR\/XvBqP8PX9bAA1\/WcAqA0g=="},
+  "bootSessionUUID" : "51340ACC-6CF2-4B4F-BA89-FAB616940AA1",
+  "wakeTime" : 1298,
+  "sleepWakeUUID" : "40B3ABE4-FEB0-4571-AD44-F6BC271D4308",
+  "sip" : "enabled",
+  "exception" : {"codes":"0x0000000000000000, 0x0000000000000000","rawCodes":[0,0],"type":"EXC_CRASH","signal":"SIGABRT"},
+  "termination" : {"flags":0,"code":6,"namespace":"SIGNAL","indicator":"Abort trap: 6","byProc":"Python","byPid":32712},
+  "asi" : {"libsystem_c.dylib":["abort() called"]},
+  "extMods" : {"caller":{"thread_create":0,"thread_set_state":0,"task_for_pid":0},"system":{"thread_create":0,"thread_set_state":0,"task_for_pid":0},"targeted":{"thread_create":0,"thread_set_state":0,"task_for_pid":0},"warnings":0},
+  "faultingThread" : 0,
+  "threads" : [{"triggered":true,"id":2300784,"threadState":{"x":[{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":6130568240},{"value":33},{"value":18446726482597246976},{"value":18344945716518825244},{"value":18344945707837948252},{"value":2},{"value":1099511627776},{"value":4294967293},{"value":0},{"value":0},{"value":0},{"value":328},{"value":8804600208},{"value":0},{"value":6},{"value":259},{"value":8781802784,"symbolLocation":224,"symbol":"_main_thread"},{"value":38573523379},{"value":11591481192,"symbolLocation":72,"symbol":"tkIntXlibStubsPtr"},{"value":11591479296},{"value":11591475200,"symbolLocation":54848,"symbol":"pswhitelist"},{"value":11591475200,"symbolLocation":54848,"symbol":"pswhitelist"},{"value":11591475200,"symbolLocation":54848,"symbol":"pswhitelist"},{"value":11591475200,"symbolLocation":54848,"symbol":"pswhitelist"}],"flavor":"ARM_THREAD_STATE64","lr":{"value":6953998472},"cpsr":{"value":1073741824},"fp":{"value":6130568160},"sp":{"value":6130568128},"esr":{"value":1442840704,"description":"(Syscall)"},"pc":{"value":6953760176,"matchesCrashFrame":1},"far":{"value":0}},"queue":"com.apple.main-thread","frames":[{"imageOffset":38320,"symbol":"__pthread_kill","symbolLocation":8,"imageIndex":5},{"imageOffset":26760,"symbol":"pthread_kill","symbolLocation":296,"imageIndex":6},{"imageOffset":497744,"symbol":"abort","symbolLocation":124,"imageIndex":7},{"imageOffset":516200,"symbol":"Tcl_PanicVA","symbolLocation":232,"imageIndex":8},{"imageOffset":516232,"symbol":"Tcl_Panic","symbolLocation":32,"imageIndex":8},{"imageOffset":722736,"symbol":"TkpInit","symbolLocation":452,"imageIndex":9},{"imageOffset":195120,"imageIndex":9},{"imageOffset":34728,"imageIndex":3},{"imageOffset":9168,"imageIndex":3},{"imageOffset":7388,"imageIndex":3},{"imageOffset":543980,"imageIndex":1},{"imageOffset":1139676,"imageIndex":1},{"imageOffset":1121456,"symbol":"_PyEval_EvalFrameDefault","symbolLocation":8728,"imageIndex":1},{"imageOffset":1143092,"imageIndex":1},{"imageOffset":269272,"symbol":"_PyFunction_Vectorcall","symbolLocation":228,"imageIndex":1},{"imageOffset":266648,"symbol":"_PyObject_FastCallDictTstate","symbolLocation":268,"imageIndex":1},{"imageOffset":270536,"symbol":"_PyObject_Call_Prepend","symbolLocation":152,"imageIndex":1},{"imageOffset":687584,"imageIndex":1},{"imageOffset":651284,"imageIndex":1},{"imageOffset":267116,"symbol":"_PyObject_MakeTpCall","symbolLocation":356,"imageIndex":1},{"imageOffset":1139772,"imageIndex":1},{"imageOffset":1121456,"symbol":"_PyEval_EvalFrameDefault","symbolLocation":8728,"imageIndex":1},{"imageOffset":269676,"imageIndex":1},{"imageOffset":266648,"symbol":"_PyObject_FastCallDictTstate","symbolLocation":268,"imageIndex":1},{"imageOffset":270536,"symbol":"_PyObject_Call_Prepend","symbolLocation":152,"imageIndex":1},{"imageOffset":687584,"imageIndex":1},{"imageOffset":651284,"imageIndex":1},{"imageOffset":267116,"symbol":"_PyObject_MakeTpCall","symbolLocation":356,"imageIndex":1},{"imageOffset":1139772,"imageIndex":1},{"imageOffset":1123692,"symbol":"_PyEval_EvalFrameDefault","symbolLocation":10964,"imageIndex":1},{"imageOffset":269676,"imageIndex":1},{"imageOffset":1139676,"imageIndex":1},{"imageOffset":1123692,"symbol":"_PyEval_EvalFrameDefault","symbolLocation":10964,"imageIndex":1},{"imageOffset":1143092,"imageIndex":1},{"imageOffset":1112528,"symbol":"PyEval_EvalCode","symbolLocation":80,"imageIndex":1},{"imageOffset":1098556,"imageIndex":1},{"imageOffset":543980,"imageIndex":1},{"imageOffset":1139676,"imageIndex":1},{"imageOffset":1123692,"symbol":"_PyEval_EvalFrameDefault","symbolLocation":10964,"imageIndex":1},{"imageOffset":1143092,"imageIndex":1},{"imageOffset":269272,"symbol":"_PyFunction_Vectorcall","symbolLocation":228,"imageIndex":1},{"imageOffset":1139676,"imageIndex":1},{"imageOffset":1123692,"symbol":"_PyEval_EvalFrameDefault","symbolLocation":10964,"imageIndex":1},{"imageOffset":1143092,"imageIndex":1},{"imageOffset":269272,"symbol":"_PyFunction_Vectorcall","symbolLocation":228,"imageIndex":1},{"imageOffset":1503796,"imageIndex":1},{"imageOffset":1501852,"symbol":"Py_RunMain","symbolLocation":824,"imageIndex":1},{"imageOffset":1503424,"imageIndex":1},{"imageOffset":1503584,"symbol":"Py_BytesMain","symbolLocation":40,"imageIndex":1},{"imageOffset":36180,"symbol":"start","symbolLocation":7184,"imageIndex":10}]},{"id":2300786,"frames":[],"threadState":{"x":[{"value":6131134464},{"value":9987},{"value":6130597888},{"value":0},{"value":409604},{"value":18446744073709551615},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0}],"flavor":"ARM_THREAD_STATE64","lr":{"value":0},"cpsr":{"value":0},"fp":{"value":0},"sp":{"value":6131134464},"esr":{"value":1442840704,"description":"(Syscall)"},"pc":{"value":6953978772},"far":{"value":0}}},{"id":2300787,"frames":[],"threadState":{"x":[{"value":6131707904},{"value":9219},{"value":6131171328},{"value":0},{"value":409604},{"value":18446744073709551615},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0}],"flavor":"ARM_THREAD_STATE64","lr":{"value":0},"cpsr":{"value":0},"fp":{"value":0},"sp":{"value":6131707904},"esr":{"value":1442840704,"description":"(Syscall)"},"pc":{"value":6953978772},"far":{"value":0}}},{"id":2300795,"frames":[],"threadState":{"x":[{"value":6132281344},{"value":17411},{"value":6131744768},{"value":0},{"value":409604},{"value":18446744073709551615},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0}],"flavor":"ARM_THREAD_STATE64","lr":{"value":0},"cpsr":{"value":0},"fp":{"value":0},"sp":{"value":6132281344},"esr":{"value":1442840704,"description":"(Syscall)"},"pc":{"value":6953978772},"far":{"value":0}}}],
+  "usedImages" : [
+  {
+    "source" : "P",
+    "arch" : "arm64",
+    "base" : 4336304128,
+    "CFBundleShortVersionString" : "3.9.6",
+    "CFBundleIdentifier" : "com.apple.python3",
+    "size" : 16384,
+    "uuid" : "b30273ae-4473-35ac-847a-8472ec1befdf",
+    "path" : "\/Library\/Developer\/CommandLineTools\/Library\/Frameworks\/Python3.framework\/Versions\/3.9\/Resources\/Python.app\/Contents\/MacOS\/Python",
+    "name" : "Python",
+    "CFBundleVersion" : "3.9.6"
+  },
+  {
+    "source" : "P",
+    "arch" : "arm64",
+    "base" : 4336910336,
+    "CFBundleShortVersionString" : "3.9.6",
+    "CFBundleIdentifier" : "com.apple.python3",
+    "size" : 2506752,
+    "uuid" : "4d9bf7cf-b241-345e-9f8f-a402f42696a5",
+    "path" : "\/Library\/Developer\/CommandLineTools\/Library\/Frameworks\/Python3.framework\/Versions\/3.9\/Python3",
+    "name" : "Python3",
+    "CFBundleVersion" : "3.9.6"
+  },
+  {
+    "source" : "P",
+    "arch" : "arm64",
+    "base" : 4340580352,
+    "size" : 32768,
+    "uuid" : "753d9517-05dd-325f-b9b7-b882e0a1b3e2",
+    "path" : "\/Library\/Developer\/CommandLineTools\/Library\/Frameworks\/Python3.framework\/Versions\/3.9\/lib\/python3.9\/lib-dynload\/_heapq.cpython-39-darwin.so",
+    "name" : "_heapq.cpython-39-darwin.so"
+  },
+  {
+    "source" : "P",
+    "arch" : "arm64",
+    "base" : 4421287936,
+    "size" : 49152,
+    "uuid" : "f7ecb261-b628-36c0-8053-1c3318acaefd",
+    "path" : "\/Library\/Developer\/CommandLineTools\/Library\/Frameworks\/Python3.framework\/Versions\/3.9\/lib\/python3.9\/lib-dynload\/_tkinter.cpython-39-darwin.so",
+    "name" : "_tkinter.cpython-39-darwin.so"
+  },
+  {
+    "source" : "P",
+    "arch" : "arm64",
+    "base" : 4421402624,
+    "size" : 32768,
+    "uuid" : "6f3cc8b3-e5ce-30e5-8185-3359cf4dc1df",
+    "path" : "\/Library\/Developer\/CommandLineTools\/Library\/Frameworks\/Python3.framework\/Versions\/3.9\/lib\/python3.9\/lib-dynload\/_csv.cpython-39-darwin.so",
+    "name" : "_csv.cpython-39-darwin.so"
+  },
+  {
+    "source" : "P",
+    "arch" : "arm64e",
+    "base" : 6953721856,
+    "size" : 246944,
+    "uuid" : "548c45c8-9733-3f0d-8ef4-c06df1df2ad0",
+    "path" : "\/usr\/lib\/system\/libsystem_kernel.dylib",
+    "name" : "libsystem_kernel.dylib"
+  },
+  {
+    "source" : "P",
+    "arch" : "arm64e",
+    "base" : 6953971712,
+    "size" : 51900,
+    "uuid" : "527c4ba0-91a5-378b-b3e2-d38269ca5a66",
+    "path" : "\/usr\/lib\/system\/libsystem_pthread.dylib",
+    "name" : "libsystem_pthread.dylib"
+  },
+  {
+    "source" : "P",
+    "arch" : "arm64e",
+    "base" : 6952472576,
+    "size" : 532552,
+    "uuid" : "fb5569a9-cb26-36c2-aa05-e99243692b60",
+    "path" : "\/usr\/lib\/system\/libsystem_c.dylib",
+    "name" : "libsystem_c.dylib"
+  },
+  {
+    "source" : "P",
+    "arch" : "arm64e",
+    "base" : 9844981760,
+    "CFBundleShortVersionString" : "8.5.9",
+    "CFBundleIdentifier" : "com.tcltk.tcllibrary",
+    "size" : 845804,
+    "uuid" : "c9cd8c7f-3b46-374c-b719-5dffaf34800f",
+    "path" : "\/System\/Library\/Frameworks\/Tcl.framework\/Versions\/8.5\/Tcl",
+    "name" : "Tcl",
+    "CFBundleVersion" : "8.5.9"
+  },
+  {
+    "source" : "P",
+    "arch" : "arm64e",
+    "base" : 9847947264,
+    "CFBundleShortVersionString" : "8.5.9",
+    "CFBundleIdentifier" : "com.tcltk.tklibrary",
+    "size" : 950720,
+    "uuid" : "235d29c7-47b7-3535-959a-6687691ea2f5",
+    "path" : "\/System\/Library\/Frameworks\/Tk.framework\/Versions\/8.5\/Tk",
+    "name" : "Tk",
+    "CFBundleVersion" : "8.5.9"
+  },
+  {
+    "source" : "P",
+    "arch" : "arm64e",
+    "base" : 6949998592,
+    "size" : 651204,
+    "uuid" : "0975afba-c46b-364c-bd84-a75daa9e455a",
+    "path" : "\/usr\/lib\/dyld",
+    "name" : "dyld"
+  },
+  {
+    "size" : 0,
+    "source" : "A",
+    "base" : 0,
+    "uuid" : "00000000-0000-0000-0000-000000000000"
+  }
+],
+  "sharedCache" : {
+  "base" : 6948913152,
+  "size" : 5653544960,
+  "uuid" : "acb998b6-263c-3634-b0a8-ae8270a116c2"
+},
+  "vmSummary" : "ReadOnly portion of Libraries: Total=946.7M resident=0K(0%) swapped_out_or_unallocated=946.7M(100%)\nWritable regions: Total=128.3M written=336K(0%) resident=336K(0%) swapped_out=0K(0%) unallocated=127.9M(100%)\n\n                                VIRTUAL   REGION \nREGION TYPE                        SIZE    COUNT (non-coalesced) \n===========                     =======  ======= \nActivity Tracing                   256K        1 \nCoreGraphics                        16K        1 \nCoreServices                        48K        1 \nKernel Alloc Once                   32K        1 \nMALLOC                           105.1M       19 \nMALLOC guard page                 3648K        4 \nSTACK GUARD                         64K        4 \nStack                             17.6M        4 \nVM_ALLOCATE                       5424K       23 \n__AUTH                            1728K      190 \n__AUTH_CONST                      31.6M      410 \n__CTF                               824        1 \n__DATA                            6251K      369 \n__DATA_CONST                      21.1M      416 \n__DATA_DIRTY                      1981K      342 \n__FONT_DATA                        2352        1 \n__LINKEDIT                       589.8M        6 \n__OBJC_RO                         78.4M        1 \n__OBJC_RW                         2570K        1 \n__TEXT                           357.0M      433 \n__TPRO_CONST                       128K        2 \ndyld private memory                160K        4 \nmapped file                       57.3M        8 \npage table in kernel               336K        1 \nshared memory                     1376K       15 \n===========                     =======  ======= \nTOTAL                              1.3G     2258 \n",
+  "legacyInfo" : {
+  "threadTriggered" : {
+    "queue" : "com.apple.main-thread"
+  }
+},
+  "logWritingSignature" : "d52a6e0cd8e144a23f4b31a51a699ad8fed38cec",
+  "roots_installed" : 0,
+  "bug_type" : "309",
+  "trmStatus" : 1,
+  "trialInfo" : {
+  "rollouts" : [
+    {
+      "rolloutId" : "6425c75e4327780c10cc4252",
+      "factorPackIds" : [
+        "642600a457e7664b1698eb32"
+      ],
+      "deploymentId" : 240000004
+    },
+    {
+      "rolloutId" : "644114de41e7236e6177f9bd",
+      "factorPackIds" : [
+
+      ],
+      "deploymentId" : 240000013
+    }
+  ],
+  "experiments" : [
+
+  ]
+}
+}
+
+Model: Mac16,12, BootROM 13822.61.10, proc 10:4:6 processors, 16 GB, SMC 
+Graphics: Apple M4, Apple M4, Built-In
+Display: Color LCD, 2560 x 1664 Retina, Main, MirrorOff, Online
+Memory Module: LPDDR5, Micron
+AirPort: spairport_wireless_card_type_wifi (0x14E4, 0x4388), wl0: Oct  3 2025 00:48:50 version 23.41.7.0.41.51.200 FWID 01-8b09c4e0
+IO80211_driverkit-1533.5 "IO80211_driverkit-1533.5" Nov 14 2025 18:26:34
+AirPort: 
+Bluetooth: Version (null), 0 services, 0 devices, 0 incoming serial ports
+Network Service: Wi-Fi, AirPort, en0
+Thunderbolt Bus: MacBook Air, Apple Inc.
+Thunderbolt Bus: MacBook Air, Apple Inc.

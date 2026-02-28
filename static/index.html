@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SIUS Score Calculator</title>
+  <style>
+    :root {
+      --bg: #1a1d23;
+      --surface: #252830;
+      --border: #3d4350;
+      --text: #e6e8ec;
+      --muted: #8b909a;
+      --accent: #5b8def;
+      --accent-hover: #7aa3f5;
+      --success: #5cb85c;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 24px;
+      line-height: 1.5;
+    }
+    h1 { font-size: 1.5rem; margin: 0 0 24px; font-weight: 600; }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .card h2 { font-size: 1rem; margin: 0 0 12px; font-weight: 600; color: var(--muted); }
+    label { display: block; margin-bottom: 8px; color: var(--muted); font-size: 0.875rem; }
+    input[type="file"] {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 6px;
+      width: 100%;
+      max-width: 400px;
+    }
+    select {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 8px 12px;
+      border-radius: 6px;
+      min-width: 200px;
+    }
+    button {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      cursor: pointer;
+    }
+    button:hover { background: var(--accent-hover); }
+    button:disabled { opacity: 0.5; cursor: not-allowed; }
+    .row { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; margin-bottom: 16px; }
+    .row:last-child { margin-bottom: 0; }
+    .status { font-size: 0.875rem; color: var(--muted); margin-top: 12px; }
+    .error { color: #e74c3c; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.875rem;
+    }
+    th, td {
+      text-align: left;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    th { color: var(--muted); font-weight: 600; }
+    .table-wrap { overflow-x: auto; }
+    .start-nr-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 20px;
+      max-height: 200px;
+      overflow-y: auto;
+      padding: 8px 0;
+    }
+    .start-nr-list label { display: flex; align-items: center; gap: 6px; margin: 0; cursor: pointer; font-size: 0.875rem; }
+    .start-nr-list input[type="checkbox"] { width: auto; margin: 0; }
+    .filter-actions { margin-bottom: 8px; }
+    .filter-actions button { margin-right: 8px; }
+  </style>
+</head>
+<body>
+  <h1>SIUS Score Calculator</h1>
+
+  <div class="card">
+    <h2>1. Load SIUS CSV</h2>
+    <label for="file">Choose a SIUS export file (no header row; columns follow SIUSFields.txt order)</label>
+    <input type="file" id="file" accept=".csv,text/csv">
+    <p class="status" id="file-status">No file loaded.</p>
+  </div>
+
+  <div class="card" id="filter-card" style="display: none;">
+    <h2>2. Select data</h2>
+    <div class="row">
+      <label for="relay">Relay</label>
+      <select id="relay">
+        <option value="">All relays</option>
+      </select>
+    </div>
+    <div class="row">
+      <span style="color: var(--muted); font-size: 0.875rem;">Start NRs to include in summary</span>
+    </div>
+    <div class="filter-actions">
+      <button type="button" id="btn-select-all">Select all</button>
+      <button type="button" id="btn-deselect-all">Deselect all</button>
+    </div>
+    <div class="start-nr-list" id="start-nr-list"></div>
+  </div>
+
+  <div class="card" id="shots-card" style="display: none;">
+    <h2>3. Shots (include/exclude from calculation)</h2>
+    <div class="row">
+      <label for="shots-start-nr">View shots for</label>
+      <select id="shots-start-nr">
+        <option value="">— Select Start NR —</option>
+      </select>
+    </div>
+    <div class="filter-actions" id="shots-actions" style="display: none;">
+      <button type="button" id="btn-include-all">Include all</button>
+      <button type="button" id="btn-exclude-all">Exclude all</button>
+      <button type="button" id="btn-include-top-n">Include top N…</button>
+    </div>
+    <p class="status" id="shots-status">Select a Start NR to list shots (newest first). Uncheck to exclude from summary.</p>
+    <div class="table-wrap" id="shots-table-wrap" style="display: none;">
+      <table id="shots-table">
+        <thead id="shots-thead"></thead>
+        <tbody id="shots-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>4. Summary by Start NR</h2>
+    <p class="status" id="summary-status">Load a file to see the summary. Decimal and Integer scores are derived from Primary and Secondary score columns (SIUSFields).</p>
+    <div class="table-wrap" id="table-wrap" style="display: none;">
+      <table id="summary-table">
+        <thead id="summary-thead"></thead>
+        <tbody id="summary-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    const tabId = typeof crypto !== "undefined" && crypto.randomUUID ? crypto.randomUUID() : "tab-" + Math.random().toString(36).slice(2);
+    const tabHeaders = { "X-Tab-ID": tabId };
+    const fileInput = document.getElementById("file");
+    const fileStatus = document.getElementById("file-status");
+    const filterCard = document.getElementById("filter-card");
+    const relaySelect = document.getElementById("relay");
+    const startNrList = document.getElementById("start-nr-list");
+    const btnSelectAll = document.getElementById("btn-select-all");
+    const btnDeselectAll = document.getElementById("btn-deselect-all");
+    const summaryStatus = document.getElementById("summary-status");
+    const tableWrap = document.getElementById("table-wrap");
+    const summaryThead = document.getElementById("summary-thead");
+    const summaryTbody = document.getElementById("summary-tbody");
+    const shotsCard = document.getElementById("shots-card");
+    const shotsStartNrSelect = document.getElementById("shots-start-nr");
+    const shotsActions = document.getElementById("shots-actions");
+    const shotsStatus = document.getElementById("shots-status");
+    const shotsTableWrap = document.getElementById("shots-table-wrap");
+    const shotsThead = document.getElementById("shots-thead");
+    const shotsTbody = document.getElementById("shots-tbody");
+    const btnIncludeAll = document.getElementById("btn-include-all");
+    const btnExcludeAll = document.getElementById("btn-exclude-all");
+    const btnIncludeTopN = document.getElementById("btn-include-top-n");
+
+    let currentStartNrs = [];
+    let excludedIndices = new Set();
+    let lastClickedShotRowIdx = -1;
+
+    relaySelect.addEventListener("change", () => { excludedIndices = new Set(); fetchShotsIfSelected(); fetchSummary(); });
+
+    btnSelectAll.addEventListener("click", () => {
+      startNrList.querySelectorAll("input[type=checkbox]").forEach(cb => cb.checked = true);
+      excludedIndices = new Set();
+      fetchShotsIfSelected();
+      fetchSummary();
+    });
+    btnDeselectAll.addEventListener("click", () => {
+      startNrList.querySelectorAll("input[type=checkbox]").forEach(cb => cb.checked = false);
+      excludedIndices = new Set();
+      fetchShotsIfSelected();
+      fetchSummary();
+    });
+
+    shotsStartNrSelect.addEventListener("change", fetchShots);
+    btnIncludeAll.addEventListener("click", () => {
+      shotsTbody.querySelectorAll("input[type=checkbox]").forEach(cb => { cb.checked = true; const i = parseInt(cb.dataset.index, 10); if (!isNaN(i)) excludedIndices.delete(i); });
+      fetchSummary();
+    });
+    btnExcludeAll.addEventListener("click", () => {
+      shotsTbody.querySelectorAll("input[type=checkbox]").forEach(cb => { cb.checked = false; const i = parseInt(cb.dataset.index, 10); if (!isNaN(i)) excludedIndices.add(i); });
+      fetchSummary();
+    });
+    btnIncludeTopN.addEventListener("click", () => {
+      const checkboxes = Array.from(shotsTbody.querySelectorAll("input[type=checkbox]"));
+      if (!checkboxes.length) return;
+      const raw = prompt("Enter number of top shots to include (newest first, e.g. 15, 18, 20):", "20");
+      if (raw == null) return;
+      const n = parseInt(raw, 10);
+      if (isNaN(n) || n < 1) { alert("Please enter a positive number."); return; }
+      const indicesInOrder = checkboxes.map(cb => parseInt(cb.dataset.index, 10));
+      const includedSet = new Set(indicesInOrder.slice(0, n));
+      checkboxes.forEach((cb, i) => {
+        const idx = indicesInOrder[i];
+        if (isNaN(idx)) return;
+        if (i < n) { cb.checked = true; excludedIndices.delete(idx); } else { cb.checked = false; excludedIndices.add(idx); }
+      });
+      fetchSummary();
+    });
+
+    fileInput.addEventListener("change", async () => {
+      const file = fileInput.files[0];
+      if (!file) return;
+      fileStatus.textContent = "Uploading…";
+      fileStatus.classList.remove("error");
+      const form = new FormData();
+      form.append("file", file);
+      try {
+        const r = await fetch("/api/upload", { method: "POST", headers: tabHeaders, body: form });
+        const data = await r.json();
+        if (!r.ok) {
+          fileStatus.textContent = data.error || "Upload failed";
+          fileStatus.classList.add("error");
+          return;
+        }
+        fileStatus.textContent = "Loaded " + data.row_count + " rows. Columns mapped from SIUSFields.txt.";
+        filterCard.style.display = "block";
+        relaySelect.innerHTML = '<option value="">All relays</option>' +
+          (data.relays || []).map(v => '<option value="' + escapeHtml(v) + '">' + escapeHtml(v) + '</option>').join('');
+        currentStartNrs = data.start_nrs || [];
+        startNrList.innerHTML = currentStartNrs.map(nr =>
+          '<label><input type="checkbox" value="' + escapeHtml(nr) + '" checked> ' + escapeHtml(nr) + '</label>'
+        ).join('');
+        startNrList.querySelectorAll("input[type=checkbox]").forEach(cb => {
+          cb.addEventListener("change", () => { excludedIndices = new Set(); fetchShotsIfSelected(); fetchSummary(); });
+        });
+        excludedIndices = new Set();
+        shotsCard.style.display = "block";
+        updateShotsStartNrOptions();
+        await fetchSummary();
+      } catch (e) {
+        fileStatus.textContent = "Error: " + e.message;
+        fileStatus.classList.add("error");
+      }
+    });
+
+    function updateShotsStartNrOptions() {
+      const selected = Array.from(startNrList.querySelectorAll("input[type=checkbox]:checked")).map(cb => cb.value);
+      const cur = shotsStartNrSelect.value;
+      shotsStartNrSelect.innerHTML = '<option value="">— Select Start NR —</option>' +
+        selected.map(nr => '<option value="' + escapeHtml(nr) + '">' + escapeHtml(nr) + '</option>').join('');
+      if (selected.indexOf(cur) !== -1) shotsStartNrSelect.value = cur;
+    }
+
+    async function fetchShots() {
+      const startNr = shotsStartNrSelect.value;
+      if (!startNr) { shotsTableWrap.style.display = "none"; shotsActions.style.display = "none"; return; }
+      const relay = relaySelect.value || "";
+      const selected = Array.from(startNrList.querySelectorAll("input[type=checkbox]:checked")).map(cb => cb.value);
+      shotsStatus.textContent = "Loading shots…";
+      try {
+        const r = await fetch("/api/shots", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", ...tabHeaders },
+          body: JSON.stringify({ relay: relay || null, start_nrs: selected, start_nr: startNr }),
+        });
+        const data = await r.json();
+        if (!r.ok) { shotsStatus.textContent = data.error || "Failed to load shots"; shotsStatus.classList.add("error"); return; }
+        shotsStatus.classList.remove("error");
+        const shots = data.shots || [];
+        shotsStatus.textContent = shots.length + " shot(s), newest first. Hold Shift and click to select a range.";
+        shotsActions.style.display = "block";
+        const cols = ["Include", "Time", "Primary score", "Secondary score", "Decimal score", "Integer score"];
+        shotsThead.innerHTML = "<tr>" + cols.map(c => "<th>" + escapeHtml(c) + "</th>").join("") + "</tr>";
+        lastClickedShotRowIdx = -1;
+        shotsTbody.innerHTML = shots.map(s => {
+          const inc = !excludedIndices.has(s.index);
+          return "<tr><td><input type=\"checkbox\" data-index=\"" + s.index + "\" " + (inc ? "checked" : "") + "></td>" +
+            cols.slice(1).map(c => "<td>" + escapeHtml(String(s[c] ?? "")) + "</td>").join("") + "</tr>";
+        }).join("");
+        const shotCheckboxes = Array.from(shotsTbody.querySelectorAll("input[type=checkbox]"));
+        shotCheckboxes.forEach((cb, rowIdx) => {
+          cb.addEventListener("click", (e) => {
+            const checkboxes = shotCheckboxes;
+            const idx = parseInt(cb.dataset.index, 10);
+            if (isNaN(idx)) return;
+            if (e.shiftKey && lastClickedShotRowIdx >= 0) {
+              const minR = Math.min(lastClickedShotRowIdx, rowIdx);
+              const maxR = Math.max(lastClickedShotRowIdx, rowIdx);
+              const targetState = cb.checked;
+              for (let r = minR; r <= maxR; r++) {
+                const c = checkboxes[r];
+                const shotIdx = parseInt(c.dataset.index, 10);
+                if (isNaN(shotIdx)) continue;
+                c.checked = targetState;
+                if (targetState) excludedIndices.delete(shotIdx); else excludedIndices.add(shotIdx);
+              }
+            } else {
+              lastClickedShotRowIdx = rowIdx;
+              if (cb.checked) excludedIndices.delete(idx); else excludedIndices.add(idx);
+            }
+            fetchSummary();
+          });
+        });
+        shotsTableWrap.style.display = "block";
+      } catch (e) {
+        shotsStatus.textContent = "Error: " + e.message;
+        shotsStatus.classList.add("error");
+        shotsTableWrap.style.display = "none";
+      }
+    }
+
+    function fetchShotsIfSelected() {
+      updateShotsStartNrOptions();
+      if (shotsStartNrSelect.value) fetchShots(); else { shotsTableWrap.style.display = "none"; shotsActions.style.display = "none"; }
+    }
+
+    async function fetchSummary() {
+      const relay = relaySelect.value || "";
+      const selected = Array.from(startNrList.querySelectorAll("input[type=checkbox]:checked")).map(cb => cb.value);
+      summaryStatus.textContent = "Calculating…";
+      summaryStatus.classList.remove("error");
+      try {
+        const r = await fetch("/api/summary", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", ...tabHeaders },
+          body: JSON.stringify({ relay: relay || null, start_nrs: selected, excluded_indices: Array.from(excludedIndices) }),
+        });
+        const data = await r.json();
+        if (!r.ok) {
+          summaryStatus.textContent = data.error || "Failed to compute summary";
+          summaryStatus.classList.add("error");
+          tableWrap.style.display = "none";
+          return;
+        }
+        summaryStatus.classList.remove("error");
+        const summary = data.summary;
+        if (!summary.length) {
+          summaryStatus.textContent = "No rows match the selected Relay and Start NRs.";
+          tableWrap.style.display = "none";
+          return;
+        }
+        summaryStatus.textContent = summary.length + " shooter(s).";
+        const cols = (data.columns && data.columns.length ? data.columns : Object.keys(summary[0])).concat(["Target"]);
+        summaryThead.innerHTML = "<tr>" + cols.map(c => "<th>" + escapeHtml(c) + "</th>").join("") + "</tr>";
+        summaryTbody.innerHTML = summary.map(row =>
+          "<tr>" + cols.slice(0, -1).map(c => "<td>" + escapeHtml(String(row[c] ?? "")) + "</td>").join("") +
+          '<td><button type="button" class="btn-target" data-start-nr="' + escapeHtml(String(row["Start NR"] ?? "")) + '">View target</button></td></tr>'
+        ).join("");
+        summaryTbody.querySelectorAll(".btn-target").forEach(btn => {
+          btn.addEventListener("click", () => openTarget(btn.dataset.startNr));
+        });
+        tableWrap.style.display = "block";
+      } catch (e) {
+        summaryStatus.textContent = "Error: " + e.message;
+        summaryStatus.classList.add("error");
+        tableWrap.style.display = "none";
+      }
+    }
+
+    async function openTarget(startNr) {
+      const w = window.open("", "_blank");
+      if (!w) { alert("Pop-up blocked. Please allow pop-ups for this site and try again."); return; }
+      const relay = relaySelect.value || "";
+      const selected = Array.from(startNrList.querySelectorAll("input[type=checkbox]:checked")).map(cb => cb.value);
+      try {
+        const r = await fetch("/api/target-data", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", ...tabHeaders },
+          body: JSON.stringify({ relay: relay || null, start_nrs: selected, excluded_indices: Array.from(excludedIndices), start_nr: startNr }),
+        });
+        const data = await r.json();
+        if (!r.ok) { w.close(); alert(data.error || "Failed to load target data"); return; }
+        const shots = data.shots || [];
+        if (shots.length === 0) { w.close(); alert("No shots to display."); return; }
+        const groups = [];
+        for (let i = 0; i < shots.length; i += 10) groups.push(shots.slice(i, i + 10));
+        const RINGS = [0.25, 2.75, 5.25, 7.75, 10.25, 12.75, 15.25, 17.75, 20.25, 22.75];
+        const SHOT_R = 2.25;
+        const PX = 300;
+        let html = '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Target - Start NR ' + escapeHtml(startNr) + '</title><style>body{font-family:system-ui;background:#1a1d23;color:#e6e8ec;padding:24px;margin:0} h1{font-size:1.25rem;margin-bottom:24px}.group{display:flex;align-items:flex-start;gap:24px;margin-bottom:32px;flex-wrap:wrap}.target{flex-shrink:0}table{border-collapse:collapse;font-size:0.875rem}th,td{padding:8px 12px;text-align:left;border:1px solid #3d4350}th{color:#8b909a}</style></head><body><h1>Target view – Start NR ' + escapeHtml(startNr) + '</h1>';
+        groups.forEach((group, gi) => {
+          let maxDist = 0;
+          group.forEach(s => {
+            const x = s.x != null ? s.x : 0, y = s.y != null ? s.y : 0;
+            maxDist = Math.max(maxDist, Math.sqrt(x*x + y*y));
+          });
+          const extent = Math.max(25, maxDist + SHOT_R + 5);
+          const scale = (PX / 2) / extent;
+          const cx = PX / 2, cy = PX / 2;
+          let svg = '<svg class="target" width="' + PX + '" height="' + PX + '" viewBox="0 0 ' + PX + ' ' + PX + '"><g transform="translate(' + cx + ',' + cy + ') scale(1,-1)">';
+          RINGS.forEach((r, i) => { svg += '<circle cx="0" cy="0" r="' + (r * scale) + '" fill="none" stroke="#3d4350" stroke-width="1"/>'; });
+          group.forEach(s => {
+            const x = (s.x != null ? s.x : 0) * scale, y = (s.y != null ? s.y : 0) * scale;
+            svg += '<circle cx="' + x + '" cy="' + y + '" r="' + (SHOT_R * scale) + '" fill="none" stroke="#5b8def" stroke-width="1.5"/>';
+          });
+          svg += '</g></svg>';
+          html += '<div class="group"><div class="target">' + svg + '<p style="margin-top:8px;font-size:0.875rem;color:#8b909a">Group ' + (gi + 1) + '</p></div><table><thead><tr><th>Shot #</th><th>Decimal</th></tr></thead><tbody>';
+          group.forEach(s => {
+            html += '<tr><td>' + escapeHtml(String(s.shot_num)) + '</td><td>' + escapeHtml(String(s.decimal_score ?? "")) + '</td></tr>';
+          });
+          html += '</tbody></table></div>';
+        });
+        html += '</body></html>';
+        w.document.write(html);
+        w.document.close();
+      } catch (e) {
+        w.close();
+        alert("Error: " + e.message);
+      }
+    }
+
+    function escapeHtml(s) {
+      const div = document.createElement("div");
+      div.textContent = s;
+      return div.innerHTML;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+Field	Format	Description
+Start NR	9999	The shooter is identified definitely by his start number
+Primary score	99.99	Primary score(1.0 through 10.9 or 1 through 10)
+Match shot	9	0=Sighter, 1=Match shot, 8= Final shot
+Firingpoint	9999	Lane number of the shooter (1-9999)
+Secondary score	99.99	Secondary score (1.0 through 10.9)
+Divisions	9999	Number of 100th millimeter to center
+Time	23:45:32	Time mark of the shot(HH:MM:SS)
+Innerten	9	1=Innerten, 0=no innerten
+X	9999.9	X Coordinate in millimeters (also negative)
+Y	-9999.9	Y Coordinate in millimeters (also negative)
+Intime	9	1=within valid time frame, 0=out
+Time since change	999.99	Time since start of the red / green phase, in 0.01s
+Sweep direction	9	0=off/left, 1=right, direction for Running target
+Demonstration	9	Demonstration mode (0=off, 1=on)|
+Shoot	99	zero based index of the shoot
+Practice	99	zero based index of the practice
+InsDell	99	Dataset inserted manually=1; Ignore data set=2
+Totalkind	99	Group total=1, Sub total=2, Grand total=4
+Group		0 or 1 based enumeration of the shot group.
+Firekind	9	Sighter shots=0, Single shots=1, Series shots=2
+Logevent	99999	Incremental LogEvent number (without Header/Footer)
+Logtype	99	Shot type (3: OwnShot, 10: CrossShot, 12: IllegalShot
+Time	99999999	Time since beginning of the current year in 0.01s units.
+Relay	99	Current Relay.
+Weapon	99	0: Weapontype: 1-21: different weapontypes
+Position	9	0:Position Position: 1:prone, 2:standing, 3:knieling, 4 prone supported
+TargetID	999	FFFF: undefined, all other numbers according to the Target Ident in the target ini file."
+External number	999	External number, with which the user shoot can be identified.

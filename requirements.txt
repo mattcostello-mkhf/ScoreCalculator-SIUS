@@ -1,0 +1,4 @@
+# SIUS Score Calculator - Python 3.8+
+# Web UI (default on Mac to avoid Tk crash); Tk version is app_tk.py
+flask>=3.0.0
+werkzeug>=3.0.0
