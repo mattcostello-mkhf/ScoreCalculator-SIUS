@@ -1,6 +1,6 @@
 # SIUS Score Calculator
 
-A small Python app to load **SIUS AG** export CSV files (e.g. from SIUSData), pick the ID and score columns, and **summarize scores by ID** (sum, count, mean). Works on macOS and Windows.
+A small Python app to load **SIUS AG** export CSV files (e.g. from SIUSData), pick the ID and score columns, and **summarize scores by ID** (sum, count, mean). Works on macOS and Windows. I built this as a test of CursorAI. I'm not a developer, so I'm sure this is messy, but it does work fairly well.
 
 ## Two ways to run
 

@@ -356,14 +356,18 @@
           return;
         }
         summaryStatus.textContent = summary.length + " shooter(s).";
-        const cols = (data.columns && data.columns.length ? data.columns : Object.keys(summary[0])).concat(["Target"]);
+        const cols = (data.columns && data.columns.length ? data.columns : Object.keys(summary[0])).concat(["Target", "Chart Scores"]);
         summaryThead.innerHTML = "<tr>" + cols.map(c => "<th>" + escapeHtml(c) + "</th>").join("") + "</tr>";
         summaryTbody.innerHTML = summary.map(row =>
-          "<tr>" + cols.slice(0, -1).map(c => "<td>" + escapeHtml(String(row[c] ?? "")) + "</td>").join("") +
-          '<td><button type="button" class="btn-target" data-start-nr="' + escapeHtml(String(row["Start NR"] ?? "")) + '">View target</button></td></tr>'
+          "<tr>" + cols.slice(0, -2).map(c => "<td>" + escapeHtml(String(row[c] ?? "")) + "</td>").join("") +
+          '<td><button type="button" class="btn-target" data-start-nr="' + escapeHtml(String(row["Start NR"] ?? "")) + '">View target</button></td>' +
+          '<td><button type="button" class="btn-chart" data-start-nr="' + escapeHtml(String(row["Start NR"] ?? "")) + '">Chart scores</button></td></tr>'
         ).join("");
         summaryTbody.querySelectorAll(".btn-target").forEach(btn => {
           btn.addEventListener("click", () => openTarget(btn.dataset.startNr));
+        });
+        summaryTbody.querySelectorAll(".btn-chart").forEach(btn => {
+          btn.addEventListener("click", () => openChart(btn.dataset.startNr));
         });
         tableWrap.style.display = "block";
       } catch (e) {
@@ -417,6 +421,84 @@
           html += '</tbody></table></div>';
         });
         html += '</body></html>';
+        w.document.write(html);
+        w.document.close();
+      } catch (e) {
+        w.close();
+        alert("Error: " + e.message);
+      }
+    }
+
+    async function openChart(startNr) {
+      const w = window.open("", "_blank");
+      if (!w) { alert("Pop-up blocked. Please allow pop-ups for this site and try again."); return; }
+      const relay = relaySelect.value || "";
+      const selected = Array.from(startNrList.querySelectorAll("input[type=checkbox]:checked")).map(cb => cb.value);
+      try {
+        const r = await fetch("/api/target-data", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", ...tabHeaders },
+          body: JSON.stringify({ relay: relay || null, start_nrs: selected, excluded_indices: Array.from(excludedIndices), start_nr: startNr }),
+        });
+        const data = await r.json();
+        if (!r.ok) { w.close(); alert(data.error || "Failed to load chart data"); return; }
+        const shots = (data.shots || []).filter(s => s.decimal_score != null);
+        if (shots.length === 0) { w.close(); alert("No decimal score data to chart."); return; }
+
+        const width = 960;
+        const height = 480;
+        const m = { top: 24, right: 24, bottom: 48, left: 60 };
+        const plotW = width - m.left - m.right;
+        const plotH = height - m.top - m.bottom;
+        const n = shots.length;
+        const xPos = (i) => (n === 1 ? m.left + plotW / 2 : m.left + (i * (plotW / (n - 1))));
+        const yPos = (v) => m.top + ((11 - v) / 11) * plotH;
+
+        let points = "";
+        let circles = "";
+        for (let i = 0; i < n; i++) {
+          const s = shots[i];
+          const x = xPos(i);
+          const y = yPos(Number(s.decimal_score));
+          points += (i ? " " : "") + x + "," + y;
+          circles += '<circle cx="' + x + '" cy="' + y + '" r="4" fill="#5b8def" stroke="#cfe0ff" stroke-width="1"><title>Shot ' +
+            escapeHtml(String(s.shot_num)) + ': ' + escapeHtml(String(s.decimal_score)) + '</title></circle>';
+        }
+
+        let yTicks = "";
+        for (let v = 0; v <= 11; v++) {
+          const y = yPos(v);
+          yTicks += '<line x1="' + m.left + '" y1="' + y + '" x2="' + (m.left + plotW) + '" y2="' + y + '" stroke="#2d3340" stroke-width="1"/>';
+          yTicks += '<text x="' + (m.left - 10) + '" y="' + (y + 4) + '" text-anchor="end" fill="#8b909a" font-size="12">' + v + '</text>';
+        }
+
+        const xTickStep = Math.max(1, Math.floor(n / 20));
+        let xTicks = "";
+        for (let i = 0; i < n; i += xTickStep) {
+          const x = xPos(i);
+          xTicks += '<line x1="' + x + '" y1="' + (m.top + plotH) + '" x2="' + x + '" y2="' + (m.top + plotH + 6) + '" stroke="#8b909a" stroke-width="1"/>';
+          xTicks += '<text x="' + x + '" y="' + (m.top + plotH + 20) + '" text-anchor="middle" fill="#8b909a" font-size="12">' +
+            escapeHtml(String(shots[i].shot_num)) + '</text>';
+        }
+        if ((n - 1) % xTickStep !== 0 && n > 1) {
+          const xLast = xPos(n - 1);
+          xTicks += '<line x1="' + xLast + '" y1="' + (m.top + plotH) + '" x2="' + xLast + '" y2="' + (m.top + plotH + 6) + '" stroke="#8b909a" stroke-width="1"/>';
+          xTicks += '<text x="' + xLast + '" y="' + (m.top + plotH + 20) + '" text-anchor="middle" fill="#8b909a" font-size="12">' +
+            escapeHtml(String(shots[n - 1].shot_num)) + '</text>';
+        }
+
+        const html = '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Chart Scores - Start NR ' + escapeHtml(startNr) +
+          '</title><style>body{font-family:system-ui;background:#1a1d23;color:#e6e8ec;padding:24px;margin:0}h1{font-size:1.25rem;margin:0 0 16px}.note{color:#8b909a;font-size:0.9rem;margin-bottom:16px}</style></head><body>' +
+          '<h1>Chart Scores - Start NR ' + escapeHtml(startNr) + '</h1><div class="note">Hover over a circle to see shot and decimal score.</div>' +
+          '<svg width="' + width + '" height="' + height + '" viewBox="0 0 ' + width + ' ' + height + '">' +
+          yTicks +
+          '<line x1="' + m.left + '" y1="' + m.top + '" x2="' + m.left + '" y2="' + (m.top + plotH) + '" stroke="#8b909a" stroke-width="1.5"/>' +
+          '<line x1="' + m.left + '" y1="' + (m.top + plotH) + '" x2="' + (m.left + plotW) + '" y2="' + (m.top + plotH) + '" stroke="#8b909a" stroke-width="1.5"/>' +
+          '<polyline points="' + points + '" fill="none" stroke="#5b8def" stroke-width="2"/>' + circles + xTicks +
+          '<text x="' + (m.left + plotW / 2) + '" y="' + (height - 8) + '" text-anchor="middle" fill="#8b909a" font-size="13">Shot number</text>' +
+          '<text x="16" y="' + (m.top + plotH / 2) + '" transform="rotate(-90 16 ' + (m.top + plotH / 2) + ')" text-anchor="middle" fill="#8b909a" font-size="13">Score</text>' +
+          '</svg></body></html>';
+
         w.document.write(html);
         w.document.close();
       } catch (e) {
